@@ -2,7 +2,9 @@ package com.example.agenda.model;
 
 import androidx.annotation.NonNull;
 
-public class Aluno {
+import java.io.Serializable;
+
+public class Aluno implements Serializable {
     private final String alunoNome;
     private final String alunoTelefone;
     private final String alunoEmail;
