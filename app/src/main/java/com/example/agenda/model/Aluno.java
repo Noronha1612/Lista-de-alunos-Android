@@ -17,8 +17,6 @@ public class Aluno implements Serializable {
         this.alunoNome = alunoNome;
         this.alunoTelefone = alunoTelefone;
         this.alunoEmail = alunoEmail;
-
-        this.id = AlunoDAO.getContadorDeIds();
     }
 
     @NonNull

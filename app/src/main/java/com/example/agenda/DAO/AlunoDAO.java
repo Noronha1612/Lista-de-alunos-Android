@@ -12,6 +12,7 @@ public class AlunoDAO {
     private static int contadorDeIds = 1;
 
     public void salva(Aluno aluno) {
+        aluno.setId(contadorDeIds);
         alunos.add(aluno);
         contadorDeIds++;
     }
