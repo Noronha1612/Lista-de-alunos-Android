@@ -28,8 +28,11 @@ public class FormularioAlunoActivity extends AppCompatActivity {
         iniciarCampos();
 
         Aluno aluno = (Aluno) getIntent().getSerializableExtra("aluno");
-        if(aluno != null)
-            campoNome.setText(aluno.toString());
+        if(aluno != null) {
+            campoNome.setText(aluno.getNome());
+            campoTelefone.setText(aluno.getTelefone());
+            campoEmail.setText(aluno.getEmail());
+        }
     }
 
     private void iniciarCampos() {
