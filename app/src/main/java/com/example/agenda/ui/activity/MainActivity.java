@@ -23,7 +23,6 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TITULO_APPBAR = "Lista de alunos";
     private final AlunoDAO dao = new AlunoDAO();
-    private List<Aluno> alunos = dao.getAlunos();
     private ArrayAdapter<Aluno> adapter;
 
     @Override
@@ -31,34 +30,46 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_alunos);
         setTitle(TITULO_APPBAR);
+
+        carregarListaAlunos();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
-        carregarListaAlunos();
+        atualizarLista();
+    }
+
+    private void atualizarLista() {
+        adapter.clear();
+        adapter.addAll(dao.getAlunos());
     }
 
     private void carregarListaAlunos() {
-        alunos = dao.getAlunos();
-
         ListView listaAlunos = findViewById(R.id.activity_lista_alunos_listview);
         configuraAdapter(listaAlunos);
 
+        configuraListenerDeCliquePorItem(listaAlunos);
+        configuraListenerDeCliqueLongoPorItem(listaAlunos);
+    }
+
+    private void configuraListenerDeCliqueLongoPorItem(ListView listaAlunos) {
         listaAlunos.setOnItemLongClickListener((AdapterView<?> adapterView, View view, int index, long id) -> {
             Aluno aluno = (Aluno) adapterView.getItemAtPosition(index);
-            dao.remove(aluno);
-            adapter.remove(aluno);
+            removerAluno(aluno);
 
             return true;
         });
+    }
 
-        configuraListenerDeCliquePorItem(listaAlunos);
+    private void removerAluno(Aluno aluno) {
+        dao.remove(aluno);
+        adapter.remove(aluno);
     }
 
     private void configuraAdapter(ListView listaAlunos) {
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, alunos);
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
 
         listaAlunos.setAdapter(adapter);
     }
