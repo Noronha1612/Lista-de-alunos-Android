@@ -19,20 +19,25 @@ public class FormularioAlunoActivity extends AppCompatActivity {
     private EditText campoTelefone;
     private EditText campoEmail;
 
+    private Aluno alunoEditavel = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_formulario_aluno);
-        setTitle(NOVO_ALUNO);
 
         iniciarCampos();
 
         Aluno aluno = (Aluno) getIntent().getSerializableExtra("aluno");
         if(aluno != null) {
+            alunoEditavel = aluno;
+
             campoNome.setText(aluno.getNome());
             campoTelefone.setText(aluno.getTelefone());
             campoEmail.setText(aluno.getEmail());
         }
+
+        setTitle(alunoEditavel != null ? "Editar aluno" : NOVO_ALUNO);
     }
 
     private void iniciarCampos() {
@@ -49,7 +54,12 @@ public class FormularioAlunoActivity extends AppCompatActivity {
         Aluno aluno = new Aluno(alunoNome, alunoTelefone, alunoEmail);
 
         AlunoDAO DAO = new AlunoDAO();
-        DAO.salva(aluno);
+
+        if (alunoEditavel != null) {
+            aluno.setId(alunoEditavel.getId());
+            DAO.edita(aluno);
+        }
+        else DAO.salva(aluno);
 
         finish();
     }
