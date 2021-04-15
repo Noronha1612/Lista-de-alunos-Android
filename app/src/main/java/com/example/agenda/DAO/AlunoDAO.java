@@ -43,4 +43,10 @@ public class AlunoDAO {
     public static int getContadorDeIds() {
         return contadorDeIds;
     }
+
+    public void remove(Aluno aluno) {
+        Aluno alunoDevolvido = buscaAlunoPorId(aluno);
+
+        if ( alunoDevolvido != null ) alunos.remove(alunoDevolvido);
+    }
 }
