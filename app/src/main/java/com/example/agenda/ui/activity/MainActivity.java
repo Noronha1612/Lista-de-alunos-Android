@@ -3,11 +3,14 @@ package com.example.agenda.ui.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -35,6 +38,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        menu.add("Remover");
+    }
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        AdapterView.AdapterContextMenuInfo menuInfo =
+                (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+
+        Aluno alunoEscolhido = adapter.getItem(menuInfo.position);
+        removerAluno(alunoEscolhido);
+
+        return super.onContextItemSelected(item);
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
 
@@ -51,16 +71,7 @@ public class MainActivity extends AppCompatActivity {
         configuraAdapter(listaAlunos);
 
         configuraListenerDeCliquePorItem(listaAlunos);
-        configuraListenerDeCliqueLongoPorItem(listaAlunos);
-    }
-
-    private void configuraListenerDeCliqueLongoPorItem(ListView listaAlunos) {
-        listaAlunos.setOnItemLongClickListener((AdapterView<?> adapterView, View view, int index, long id) -> {
-            Aluno aluno = (Aluno) adapterView.getItemAtPosition(index);
-            removerAluno(aluno);
-
-            return true;
-        });
+        registerForContextMenu(listaAlunos);
     }
 
     private void removerAluno(Aluno aluno) {
