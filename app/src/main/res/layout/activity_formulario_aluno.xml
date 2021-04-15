@@ -1,42 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".ui.activity.FormularioAlunoActivity">
 
-    <EditText
-        android:id="@+id/activity_formulario_aluno_nome"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:inputType="textCapWords"
-        android:hint="@string/nome" />
+        android:orientation="vertical">
+                <EditText
+                    android:id="@+id/activity_formulario_aluno_nome"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:hint="@string/nome"
+                    android:inputType="textCapWords" />
 
-    <EditText
-        android:id="@+id/activity_formulario_aluno_telefone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:inputType="phone"
-        android:hint="@string/telefone" />
+                <EditText
+                    android:id="@+id/activity_formulario_aluno_telefone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:hint="@string/telefone"
+                    android:inputType="phone" />
 
-    <EditText
-        android:id="@+id/activity_formulario_aluno_email"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:inputType="textEmailAddress"
-        android:hint="@string/e_mail" />
+                <EditText
+                    android:id="@+id/activity_formulario_aluno_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:hint="@string/e_mail"
+                    android:inputType="textEmailAddress" />
 
-    <Button
-        android:id="@+id/activity_formulario_aluno_botao_salvar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:onClick="handleSaveStudent"
-        android:text="@string/salvar" />
-
-</LinearLayout>
+                <Button
+                    android:id="@+id/activity_formulario_aluno_botao_salvar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:onClick="handleSaveStudent"
+                    android:text="@string/salvar" />
+    </LinearLayout>
+</ScrollView>
