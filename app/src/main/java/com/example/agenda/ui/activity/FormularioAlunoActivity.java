@@ -10,14 +10,16 @@ import com.example.agenda.DAO.AlunoDAO;
 import com.example.agenda.R;
 import com.example.agenda.model.Aluno;
 
-import java.io.Serializable;
+import static com.example.agenda.ui.activity.ConstantesActivities.CHAVE_ALUNO;
 
 public class FormularioAlunoActivity extends AppCompatActivity {
 
     private static final String NOVO_ALUNO = "Novo aluno";
+    private static final String EDITAR_ALUNO = "Editar aluno";
     private EditText campoNome;
     private EditText campoTelefone;
     private EditText campoEmail;
+    private final AlunoDAO DAO = new AlunoDAO();
 
     private Aluno alunoEditavel = null;
 
@@ -27,8 +29,13 @@ public class FormularioAlunoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_formulario_aluno);
 
         iniciarCampos();
+        iniciarAlunoSeExistir();
 
-        Aluno aluno = (Aluno) getIntent().getSerializableExtra("aluno");
+        setTitle(alunoEditavel != null ? EDITAR_ALUNO : NOVO_ALUNO);
+    }
+
+    private void iniciarAlunoSeExistir() {
+        Aluno aluno = (Aluno) getIntent().getSerializableExtra(CHAVE_ALUNO);
         if(aluno != null) {
             alunoEditavel = aluno;
 
@@ -36,8 +43,6 @@ public class FormularioAlunoActivity extends AppCompatActivity {
             campoTelefone.setText(aluno.getTelefone());
             campoEmail.setText(aluno.getEmail());
         }
-
-        setTitle(alunoEditavel != null ? "Editar aluno" : NOVO_ALUNO);
     }
 
     private void iniciarCampos() {
@@ -53,8 +58,10 @@ public class FormularioAlunoActivity extends AppCompatActivity {
 
         Aluno aluno = new Aluno(alunoNome, alunoTelefone, alunoEmail);
 
-        AlunoDAO DAO = new AlunoDAO();
+        finalizaFormulario(aluno);
+    }
 
+    private void finalizaFormulario(Aluno aluno) {
         if (alunoEditavel != null) {
             aluno.setId(alunoEditavel.getId());
             DAO.edita(aluno);

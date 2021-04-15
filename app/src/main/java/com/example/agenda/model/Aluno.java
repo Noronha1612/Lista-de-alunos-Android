@@ -2,8 +2,6 @@ package com.example.agenda.model;
 
 import androidx.annotation.NonNull;
 
-import com.example.agenda.DAO.AlunoDAO;
-
 import java.io.Serializable;
 
 public class Aluno implements Serializable {

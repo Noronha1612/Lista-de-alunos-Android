@@ -1,7 +1,5 @@
 package com.example.agenda.DAO;
 
-import android.util.Log;
-
 import com.example.agenda.model.Aluno;
 
 import java.util.ArrayList;
@@ -18,19 +16,24 @@ public class AlunoDAO {
     }
 
     public void edita(Aluno aluno) {
-        Aluno alunoEncontrado = null;
-
-        for (Aluno a: alunos) {
-            if ( a.getId() == aluno.getId() ) {
-                alunoEncontrado = a;
-            }
-        }
-
+        Aluno alunoEncontrado = buscaAlunoPorId(aluno);
         if ( alunoEncontrado != null ) {
             int posicaoDoAluno = alunos.indexOf(alunoEncontrado);
 
             alunos.set(posicaoDoAluno, aluno);
         }
+    }
+
+    private Aluno buscaAlunoPorId(Aluno aluno) {
+        Aluno alunoEncontrado = null;
+
+        for (Aluno a: alunos) {
+            if ( a.getId() == aluno.getId() ) {
+                return a;
+            }
+        }
+
+        return null;
     }
 
     public List<Aluno> getAlunos() {
