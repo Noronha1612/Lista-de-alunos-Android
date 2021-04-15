@@ -20,4 +20,16 @@ public class Aluno implements Serializable {
     public String toString() {
         return this.alunoNome;
     }
+
+    public String getEmail() {
+        return alunoEmail;
+    }
+
+    public String getNome() {
+        return alunoNome;
+    }
+
+    public String getTelefone() {
+        return alunoTelefone;
+    }
 }
