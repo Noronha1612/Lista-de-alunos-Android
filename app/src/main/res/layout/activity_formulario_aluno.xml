@@ -34,13 +34,5 @@
                     android:layout_margin="8dp"
                     android:hint="@string/e_mail"
                     android:inputType="textEmailAddress" />
-
-                <Button
-                    android:id="@+id/activity_formulario_aluno_botao_salvar"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:onClick="handleSaveStudent"
-                    android:text="@string/salvar" />
     </LinearLayout>
 </ScrollView>

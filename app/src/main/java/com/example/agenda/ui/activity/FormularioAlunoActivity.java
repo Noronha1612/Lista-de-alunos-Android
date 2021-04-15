@@ -1,9 +1,12 @@
 package com.example.agenda.ui.activity;
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.agenda.DAO.AlunoDAO;
@@ -34,6 +37,22 @@ public class FormularioAlunoActivity extends AppCompatActivity {
         setTitle(alunoEditavel != null ? EDITAR_ALUNO : NOVO_ALUNO);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_formulario_aluno_menu, menu);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        int itemId = item.getItemId();
+        if ( itemId == R.id.activity_formulario_aluno_menu_salvar ) handleSaveStudent();
+
+        return super.onOptionsItemSelected(item);
+    }
+
     private void iniciarAlunoSeExistir() {
         Aluno aluno = (Aluno) getIntent().getSerializableExtra(CHAVE_ALUNO);
         if(aluno != null) {
@@ -51,7 +70,7 @@ public class FormularioAlunoActivity extends AppCompatActivity {
         this.campoEmail = findViewById(R.id.activity_formulario_aluno_email);
     }
 
-    public void handleSaveStudent(View view) {
+    public void handleSaveStudent() {
         String alunoNome = campoNome.getText().toString();
         String alunoTelefone = campoTelefone.getText().toString();
         String alunoEmail = campoEmail.getText().toString();
