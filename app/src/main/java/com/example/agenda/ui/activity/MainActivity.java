@@ -2,6 +2,7 @@ package com.example.agenda.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -23,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TITULO_APPBAR = "Lista de alunos";
     private final AlunoDAO dao = new AlunoDAO();
     private List<Aluno> alunos = dao.getAlunos();
+    private ArrayAdapter<Aluno> adapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -34,16 +36,31 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        alunos = dao.getAlunos();
 
         carregarListaAlunos();
     }
 
     private void carregarListaAlunos() {
+        alunos = dao.getAlunos();
+
         ListView listaAlunos = findViewById(R.id.activity_lista_alunos_listview);
-        listaAlunos.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, alunos));
+        configuraAdapter(listaAlunos);
+
+        listaAlunos.setOnItemLongClickListener((AdapterView<?> adapterView, View view, int index, long id) -> {
+            Aluno aluno = (Aluno) adapterView.getItemAtPosition(index);
+            dao.remove(aluno);
+            adapter.remove(aluno);
+
+            return true;
+        });
 
         configuraListenerDeCliquePorItem(listaAlunos);
+    }
+
+    private void configuraAdapter(ListView listaAlunos) {
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, alunos);
+
+        listaAlunos.setAdapter(adapter);
     }
 
     private void configuraListenerDeCliquePorItem(ListView listaAlunos) {
