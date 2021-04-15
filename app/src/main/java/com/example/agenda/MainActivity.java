@@ -33,10 +33,7 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
 
         AlunoDAO dao = new AlunoDAO();
-
-        dao.salva(new Aluno("Noronha", "dasniodnaso", "odasnmdoa"));
-        dao.salva(new Aluno("Froid", "dasniodnaso", "odasnmdoa"));
-
+        
         final List<Aluno> alunos = dao.getAlunos();
 
         ListView listaAlunos = findViewById(R.id.activity_lista_alunos_listview);
