@@ -1,6 +1,5 @@
 package com.example.agenda.ui.activity;
 
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
@@ -13,18 +12,16 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.agenda.dao.AlunoDAO;
 import com.example.agenda.R;
 import com.example.agenda.model.Aluno;
-import com.example.agenda.ui.adapter.ListaAlunosAdapter;
+import com.example.agenda.ui.MainActivityController;
 
 import static com.example.agenda.ui.activity.ConstantesActivities.CHAVE_ALUNO;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final String TITULO_APPBAR = "Lista de alunos";
-    private final AlunoDAO dao = new AlunoDAO();
-    private ListaAlunosAdapter adapter;
+    private final MainActivityController mainActivityController = new MainActivityController(this);
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,59 +43,27 @@ public class MainActivity extends AppCompatActivity {
 
         int itemId = item.getItemId();
         if ( itemId == R.id.activity_main_activity_menu_remover ) {
-            Aluno alunoEscolhido = getAlunoPorItem(item);
+            Aluno alunoEscolhido = mainActivityController.getAlunoPorItem(item);
 
-            abrirDialog(alunoEscolhido);
+            mainActivityController.abrirDialog(alunoEscolhido);
         }
 
         return super.onContextItemSelected(item);
-    }
-
-    private void abrirDialog(Aluno aluno) {
-        // Construindo dialog
-        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-
-        // Colocando os dados no dialog
-        dialog.setTitle(String.format("Removendo %s", aluno.getNome()));
-        dialog.setMessage(String.format("Tem certeza que quer remover %s?", aluno.getNome()));
-        dialog.setPositiveButton("Sim", (dialog1, which) -> removerAluno(aluno));
-        dialog.setNegativeButton("Não", null);
-
-        // Exibindo o dialog
-        dialog.show();
-    }
-
-    private Aluno getAlunoPorItem(@NonNull MenuItem item) {
-        return adapter.getItem(
-                ((AdapterView.AdapterContextMenuInfo)item.getMenuInfo())
-                        .position
-        );
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
-        adapter.atualiza(dao.getAlunos());
+        mainActivityController.atualizar();
     }
 
     private void carregarListaAlunos() {
         ListView listaAlunos = findViewById(R.id.activity_lista_alunos_listview);
-        configuraAdapter(listaAlunos);
+        mainActivityController.configuraAdapter(listaAlunos);
 
         configuraListenerDeCliquePorItem(listaAlunos);
         registerForContextMenu(listaAlunos);
-    }
-
-    private void removerAluno(Aluno aluno) {
-        dao.remove(aluno);
-        adapter.remove(aluno);
-    }
-
-    private void configuraAdapter(ListView listaAlunos) {
-        adapter = new ListaAlunosAdapter(MainActivity.this);
-
-        listaAlunos.setAdapter(adapter);
     }
 
     private void configuraListenerDeCliquePorItem(ListView listaAlunos) {
