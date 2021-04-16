@@ -1,5 +1,6 @@
 package com.example.agenda.ui.activity;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
@@ -44,17 +45,36 @@ public class MainActivity extends AppCompatActivity {
     public boolean onContextItemSelected(@NonNull MenuItem item) {
 
         int itemId = item.getItemId();
-        if ( itemId == R.id.activity_main_activity_menu_remover ) removerPeloMenu(item);
+        if ( itemId == R.id.activity_main_activity_menu_remover ) {
+            Aluno alunoEscolhido = getAlunoPorItem(item);
+
+            abrirDialog(alunoEscolhido);
+        }
 
         return super.onContextItemSelected(item);
     }
 
-    private void removerPeloMenu(@NonNull MenuItem item) {
-        AdapterView.AdapterContextMenuInfo menuInfo =
-                (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+    private void abrirDialog(Aluno aluno) {
+        // Construindo dialog
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
 
-        Aluno alunoEscolhido = adapter.getItem(menuInfo.position);
-        removerAluno(alunoEscolhido);
+        // Colocando os dados no dialog
+        dialog.setTitle(String.format("Removendo %s", aluno.getNome()));
+        dialog.setMessage(String.format("Tem certeza que quer remover %s?", aluno.getNome()));
+        dialog.setPositiveButton("Sim", (dialog1, which) -> {
+            removerAluno(aluno);
+        });
+        dialog.setNegativeButton("Não", null);
+
+        // Exibindo o dialog
+        dialog.show();
+    }
+
+    private Aluno getAlunoPorItem(@NonNull MenuItem item) {
+        return adapter.getItem(
+                ((AdapterView.AdapterContextMenuInfo)item.getMenuInfo())
+                        .position
+        );
     }
 
     @Override
