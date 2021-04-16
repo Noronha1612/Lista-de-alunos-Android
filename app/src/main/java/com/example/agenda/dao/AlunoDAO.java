@@ -1,4 +1,4 @@
-package com.example.agenda.DAO;
+package com.example.agenda.dao;
 
 import com.example.agenda.model.Aluno;
 
@@ -25,8 +25,6 @@ public class AlunoDAO {
     }
 
     private Aluno buscaAlunoPorId(Aluno aluno) {
-        Aluno alunoEncontrado = null;
-
         for (Aluno a: alunos) {
             if ( a.getId() == aluno.getId() ) {
                 return a;
@@ -38,10 +36,6 @@ public class AlunoDAO {
 
     public List<Aluno> getAlunos() {
         return new ArrayList<>(alunos);
-    }
-
-    public static int getContadorDeIds() {
-        return contadorDeIds;
     }
 
     public void remove(Aluno aluno) {

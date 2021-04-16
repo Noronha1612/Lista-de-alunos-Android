@@ -13,7 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.agenda.DAO.AlunoDAO;
+import com.example.agenda.dao.AlunoDAO;
 import com.example.agenda.R;
 import com.example.agenda.model.Aluno;
 import com.example.agenda.ui.adapter.ListaAlunosAdapter;
@@ -61,9 +61,7 @@ public class MainActivity extends AppCompatActivity {
         // Colocando os dados no dialog
         dialog.setTitle(String.format("Removendo %s", aluno.getNome()));
         dialog.setMessage(String.format("Tem certeza que quer remover %s?", aluno.getNome()));
-        dialog.setPositiveButton("Sim", (dialog1, which) -> {
-            removerAluno(aluno);
-        });
+        dialog.setPositiveButton("Sim", (dialog1, which) -> removerAluno(aluno));
         dialog.setNegativeButton("Não", null);
 
         // Exibindo o dialog

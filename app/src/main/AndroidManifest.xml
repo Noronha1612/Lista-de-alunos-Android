@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Agenda"
-        android:name=".AgendaApplication">
+        android:name=".AgendaApplication"
+        android:fullBackupContent="@xml/backup_descriptor">
         <activity android:name=".ui.activity.FormularioAlunoActivity" />
         <activity android:name=".ui.activity.MainActivity">
             <intent-filter>
